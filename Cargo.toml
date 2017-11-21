@@ -1,6 +1,11 @@
 [package]
+authors = ["Tung Duong <vn.duongthanhtung@gmail.com>"]
+description = "Simulated SIMD for Stable channel.\nEffort to make the `simd` crate work on stable channel.\n"
+keywords = ["simd"]
 name = "ssimd"
+readme = "README.md"
+repository = "https://github.com/vnduongthanhtung/ssimd"
 version = "0.1.0"
-authors = ["lb"]
 
 [dependencies]
+
