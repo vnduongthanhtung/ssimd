@@ -34,7 +34,7 @@ fn main() {
 }
 ```
 
-When compile to llvm-ir code you will see those instructions in the **test\_simd **function:
+When compile to llvm-ir code you will see those instructions in the test\_simd function:
 
 ```
       %7 = fadd <2 x double> %4, %6
@@ -74,7 +74,7 @@ fn main() {
 }
 ```
 
-The llvm-ir code in the **test\_simd **function :
+The llvm-ir code in the test\_simd function :
 
 ```
       %104 = bitcast %"ssimd::f64x2"* %c.i to i8*
