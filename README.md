@@ -4,11 +4,11 @@ Simulated Simd on Rust stable channel. This is my effort to make the [simd crate
 
 ### Note
 
-In order to make auto-vectorization successful in most of the cases, please turn on the BB vectorizer :
+In order to make auto-vectorization successful in most of the cases, please turn on the BB optimizer :
 
 [https://llvm.org/docs/Vectorizers.html\#the-slp-vectorizer](https://llvm.org/docs/Vectorizers.html#the-slp-vectorizer)
 
-For Rust, you can turn on the BB vectorizer with the following build command:
+For Rust, you can turn on the BB optimizer with the following build command:
 
 ```
 RUSTFLAGS="-C llvm-args=-vectorize-slp-aggressive" cargo build --release
@@ -48,7 +48,7 @@ and the equivalent assembly code is :
     movapd    %xmm2, 16(%rsp)
 ```
 
-In this case, even with the default build commnad, LLVM can successfully vectorize the code.
+In this case, even with the default build command, LLVM can successfully vectorize the code.
 
 Let's try a more tricky example :
 
