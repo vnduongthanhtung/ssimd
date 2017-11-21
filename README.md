@@ -1,4 +1,4 @@
-# ssdim
+# ssimd
 
 Simulated Simd on Rust stable channel. This is my effort to make the [simd crate](https://github.com/rust-lang-nursery/simd) work on stable channel. The work is based on the well-known method : auto-vectorization. However, in this crate, I try to provide an API that is as close as possible to the simd crate. While autovectorization seems to work as a luck, with a simple trick as follow, I have made autovectorization successful in most of the cases.
 
