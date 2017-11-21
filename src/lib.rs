@@ -476,7 +476,7 @@ macro_rules! bool_impls {
                 $name($($field),*)
             }
 
-            /// Create new instance with all lanes set to a vale
+            /// Create new instance with all lanes set to a value
             #[inline(always)]
             pub fn splat(x: $elem) -> Self {
                 Self {$($index : x),*}
