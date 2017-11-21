@@ -34,7 +34,7 @@ fn main() {
 }
 ```
 
-When compile to llvm-ir code you will see those instructions in the test\_simd function:
+When compile to llvm-ir code you will see those instructions in the function "test\_simd":
 
 ```
       %7 = fadd <2 x double> %4, %6
@@ -74,7 +74,7 @@ fn main() {
 }
 ```
 
-The llvm-ir code in the test\_simd function :
+The llvm-ir code in the function "test\_simd":
 
 ```
       %104 = bitcast %"ssimd::f64x2"* %c.i to i8*
@@ -91,7 +91,7 @@ and the assembly code :
     addsd    %xmm2, %xmm1
 ```
 
-so llvm wasn't able to vectorize the code when an integer-to-float converstion is inserted inside the function. However if the BB optimizer is enable, you will see the llvm-ir code as follow:
+So llvm wasn't able to vectorize the code when an integer-to-float converstion is inserted inside the function. However if the BB optimizer is enable, you will see the llvm-ir code as follow:
 
 ```
         %109 = fadd <2 x double> %108, %106
@@ -107,5 +107,48 @@ and the assembly code:
 
 So the code is successfully vectorized.
 
-You can see more examples in the folder **examples. **These examples are ported from the [simd crate](https://github.com/rust-lang-nursery/simd) to work on stable channel. Almost no modification from the original code is made. For these examples, some might not get autovectorization with default build command. However, when the BB optimizer is enabled, all examples are successfully vectorized. You can try more with your examples.
+You can see more examples in the folder "examples".** **These examples are ported from the [simd crate](https://github.com/rust-lang-nursery/simd) to work on stable channel. Almost no modification from the original code is made. For these examples, some might not get autovectorization with default build command. However, when the BB optimizer is enabled, all examples are successfully vectorized. You can try more with your examples.
+
+### AVX instructions
+
+AVX instructions are not available in some machines. If you want to use AVX instructions with the intrinsic approach, you will need to use the Rust attribute "target\_feature" to detect whether the machines support those instructions. You also need to provide a fallback function method in case AVX instructions are not available. However, if you use autovectorization, you only need to provide one function method, since LLVM will generate appropriate instructions for each machine configuration.
+
+Consider the following example:
+
+```rust
+extern crate ssimd;
+use ssimd::f64x4;
+
+#[inline(never)]
+fn test_simd(a : f64x4, b: f64x4) {
+    let c = a + b;
+    println!("{:?}", c);
+}
+fn main() {
+    let a = f64x4::new(1.0, 1.0, 1.0, 1.0);
+    let b = f64x4::new(2.0, 3.0, 4.0, 5.0);
+    test_simd(a, b);
+}
+
+```
+
+On machines that do not have AVX instructions, LLVM generates the following code:
+
+```
+	addpd	%xmm0, %xmm2
+	addpd	%xmm1, %xmm3
+	movapd	%xmm2, 64(%rsp)
+	movapd	%xmm3, 80(%rsp)
+ 
+```
+
+On machines that support AVX instructions, LLVM will generate this:
+
+```
+	vaddpd	(%rsi), %ymm0, %ymm0
+	vmovapd	%ymm0, 64(%rsp)
+
+```
+
+So everything will be done automatically for you.
 
