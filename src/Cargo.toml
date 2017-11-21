@@ -1,6 +1,0 @@
-[package]
-name = "ssimd"
-version = "0.1.0"
-authors = ["lb"]
-
-[dependencies]
