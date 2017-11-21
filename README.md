@@ -8,7 +8,7 @@ In order to make auto-vectorization successful in most of the cases, please turn
 
 [https://llvm.org/docs/Vectorizers.html\#the-slp-vectorizer](https://llvm.org/docs/Vectorizers.html#the-slp-vectorizer)
 
-For Rust, you can turn on the BB optimizer with the following build command:
+For Rust, you can turn on the BB optimizer by building your projects with the following build command:
 
 ```
 RUSTFLAGS="-C llvm-args=-vectorize-slp-aggressive" cargo build --release
