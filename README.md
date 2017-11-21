@@ -107,11 +107,11 @@ and the assembly code:
 
 So the code is successfully vectorized.
 
-You can see more examples in the folder "examples".** **These examples are ported from the [simd crate](https://github.com/rust-lang-nursery/simd) to work on stable channel. Almost no modification from the original code is made. For these examples, some might not get autovectorization with default build command. However, when the BB optimizer is enabled, all examples are successfully vectorized. You can try more with your examples.
+You can see more examples in the folder "examples". These examples are ported from the [simd crate](https://github.com/rust-lang-nursery/simd) to work on stable channel. Almost no modification from the original code is made. For these examples, some might not get autovectorization with default build command. However, when the BB optimizer is enabled, all examples are successfully vectorized. You can try more with your examples.
 
 ### AVX instructions
 
-AVX instructions are not available in some machines. If you want to use AVX instructions with the intrinsic approach, you will need to use the Rust attribute "target\_feature" to detect whether the machines support those instructions. You also need to provide a fallback function method in case AVX instructions are not available. However, if you use autovectorization, you only need to provide one function method, since LLVM will generate appropriate instructions for each machine configuration.
+AVX instructions are not available in some machines. If you want to use AVX instructions with the intrinsic approach (like the one in the [simd crate](https://github.com/rust-lang-nursery/simd)), you will need to use the Rust attribute "target\_feature" to detect whether the machines support those instructions. You also need to provide a fallback function method in case AVX instructions are not available. However, if you use autovectorization, you only need to provide one function method, since LLVM will generate appropriate instructions for each machine configuration.
 
 Consider the following example:
 
